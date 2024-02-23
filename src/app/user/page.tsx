@@ -2,13 +2,11 @@
 
 import { Search, Trash } from "@/assets";
 import { Input } from "@/components";
-import { useGetAllUsers } from "@/domain/user/use-case/use-get-all-users";
-import { useRemoveUser } from "@/domain/user/use-case/use-remove-user";
-import { useModal } from "@/service/modal/use-modal";
-import { useToast } from "@/service/toast/use-toast";
+import { useGetAllUsers, useRemoveUser } from "@/domain";
+import { useModal, useToast } from "@/service";
 import React, { useMemo, useState } from "react";
 
-export function UserList() {
+export default function User() {
     const [search, setSearch] = useState("");
     const { setToast } = useToast();
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
@@ -42,7 +40,7 @@ export function UserList() {
 
     if (!isLoading || !isError) {
         return (
-            <>
+            <div className="px-72">
                 <h1 className="text-2xl bold mb-20 mt-4">Usuários</h1>
                 <Input
                     label="Procurar"
@@ -133,7 +131,7 @@ export function UserList() {
                         ))}
                     </tbody>
                 </table>
-            </>
+            </div>
         );
     }
 }

@@ -3,10 +3,13 @@
 import React, { useState } from "react";
 
 import { Arrow, Help, Apps, Icon, Logo } from "@/assets";
+import { usePathname, useRouter } from "next/navigation";
 
 export function Header() {
+    const path = usePathname();
+    const breadcrumbs = path.split("/").filter((value) => value !== "");
+    const { push } = useRouter();
     const [dropdown, setDropdown] = useState(false);
-
     return (
         <>
             <div className="w-full h-20 bg-gray-850 text-white flex flex-1 items-center gap-2 pl-8">
@@ -17,13 +20,30 @@ export function Header() {
                 </div>
             </div>
             <div className="w-full h-16 sticky top-0 bg-white border-b flex flex-1 items-center pr-8 pl-8 gap-4 z-10">
-                <div className="flex flex-1 items-center gap-2">
-                    <Icon color="#8556AA" />
-                    <p className="text-purple-950 font-bold uppercase text-sm">
-                        Bem vindo
-                    </p>
-                    <Arrow width={16} height={10} />
-                    <p className="text-gray75">Registro</p>
+                <div className="flex flex-1 gap-2">
+                    <button
+                        onClick={() => push("/")}
+                        className="flex items-center gap-2"
+                    >
+                        <Icon color="#8556AA" />
+                        <p className="text-purple-950 font-bold uppercase text-sm">
+                            Bem vindo
+                        </p>
+                    </button>
+                    {breadcrumbs.map((breadcrumb) => (
+                        <div
+                            key={breadcrumb}
+                            className="flex items-center gap-2"
+                        >
+                            <Arrow width={16} height={10} />
+                            <p
+                                className="text-gray75 cursor-pointer"
+                                onClick={() => push(`/${breadcrumb}`)}
+                            >
+                                {breadcrumb}
+                            </p>
+                        </div>
+                    ))}
                 </div>
                 <Help />
                 <Apps />

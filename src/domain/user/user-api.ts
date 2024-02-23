@@ -1,5 +1,5 @@
 import { api } from "@/api/api-config";
-import { UserResponseType } from "./user-types";
+import { RegisterUserType, UserResponseType } from "./user-types";
 
 const USER_PATH = "/users";
 
@@ -14,7 +14,12 @@ async function removeUser(id: string): Promise<void> {
     });
 }
 
+async function registerUser(data: RegisterUserType): Promise<void> {
+    await api.post(`${USER_PATH}/create`, data);
+}
+
 export const userAPI = {
     getAllUsers,
     removeUser,
+    registerUser,
 };

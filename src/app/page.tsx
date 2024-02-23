@@ -5,10 +5,6 @@ export default function Home() {
     return (
         <div>
             <Banner />
-            <div className="px-72">
-                <UserList />
-                <Register />
-            </div>
         </div>
     );
 }

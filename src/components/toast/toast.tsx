@@ -1,9 +1,9 @@
 import { Success } from "@/assets";
-import { useToastContext } from "@/service/toast/use-toast-context";
+import { useToast } from "@/service/toast/use-toast";
 import React, { useEffect } from "react";
 
 export function Toast() {
-    const { toast, hideToast } = useToastContext();
+    const { toast, hideToast } = useToast();
     if (!toast) return;
     setTimeout(() => hideToast(), 2000);
     return (
