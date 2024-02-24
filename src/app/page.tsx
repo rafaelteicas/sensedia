@@ -1,5 +1,4 @@
-import { Banner, Register } from "@/components";
-import { UserList } from "@/components";
+import { Banner } from "@/components";
 
 export default function Home() {
     return (

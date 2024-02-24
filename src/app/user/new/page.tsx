@@ -1,21 +1,20 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Input } from "..";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { useForm } from "react-hook-form";
+import React, { useState } from "react";
+import { Button, Input } from "@/components";
 import {
     RegisterSchema,
     registerDays,
     registerSchema,
 } from "./register-schema";
+import { useRegisterUser } from "@/domain";
+import { useToast } from "@/service";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "../button/button";
-import { useRegisterUser } from "@/domain/user/use-case/use-register-user";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
-import { useToast } from "@/service/toast/use-toast";
+import { useForm } from "react-hook-form";
 
-export function Register() {
+export default function Register() {
     const [checkedLabel, setCheckedLabel] = useState<string[]>([]);
     const { setToast } = useToast();
     const queryClient = useQueryClient();
@@ -58,7 +57,7 @@ export function Register() {
     }
 
     return (
-        <>
+        <div className="px-72">
             <h1 className="text-2xl bold mb-20 mt-8">Registro</h1>
             <div className="w-full border rounded-[10px] h-full flex flex-1 flex-col p-10">
                 <p className="text-sm font-medium text-gray-650 pb-8">
@@ -149,6 +148,6 @@ export function Register() {
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 }

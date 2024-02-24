@@ -1,11 +1,12 @@
 import { userAdapter } from "./user-adapter";
 import { userAPI } from "./user-api";
-import { RegisterUserType } from "./user-types";
+import { RegisterUserType, UserType } from "./user-types";
 
-async function getAllUsers() {
+async function getAllUsers(): Promise<UserType[]> {
     const response = await userAPI.getAllUsers();
-    const users = userAdapter.toUser(response);
-    return users;
+    console.log(response);
+
+    return response.map((user) => userAdapter.toUser(user));
 }
 
 async function removeUser(id: string) {
@@ -16,8 +17,15 @@ async function registerUser(data: RegisterUserType): Promise<void> {
     await userAPI.registerUser(data);
 }
 
+async function getUserById(userId: string): Promise<UserType> {
+    const response = await userAPI.getUserById(userId);
+
+    return userAdapter.toUser(response);
+}
+
 export const userService = {
     getAllUsers,
     removeUser,
     registerUser,
+    getUserById,
 };

@@ -8,6 +8,7 @@ import { usePathname, useRouter } from "next/navigation";
 export function Header() {
     const path = usePathname();
     const breadcrumbs = path.split("/").filter((value) => value !== "");
+
     const { push } = useRouter();
     const [dropdown, setDropdown] = useState(false);
     return (
@@ -30,7 +31,7 @@ export function Header() {
                             Bem vindo
                         </p>
                     </button>
-                    {breadcrumbs.map((breadcrumb) => (
+                    {breadcrumbs.map((breadcrumb, i) => (
                         <div
                             key={breadcrumb}
                             className="flex items-center gap-2"
@@ -38,7 +39,7 @@ export function Header() {
                             <Arrow width={16} height={10} />
                             <p
                                 className="text-gray75 cursor-pointer"
-                                onClick={() => push(`/${breadcrumb}`)}
+                                onClick={() => push(`/${breadcrumbs[i]}`)}
                             >
                                 {breadcrumb}
                             </p>
