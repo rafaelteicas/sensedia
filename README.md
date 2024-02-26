@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Sensedia Portal
 
-## Getting Started
+Aplicação em Next.js desenvolvida para a etapa seletiva.
 
-First, run the development server:
+### 🛠️ Libs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   [Next.js 14](https://nextjs.org/)
+-   [Typescript](https://www.typescriptlang.org/)
+-   [Tailwind](https://tailwindcss.com/)
+-   [Drizzle](https://orm.drizzle.team/)
+-   [Postgres](https://www.postgresql.org/)
+-   [NextAuth](https://next-auth.js.org/)
+-   [TanStack Query v5](https://tanstack.com/query/latest)
+-   [Axios](https://axios-http.com/ptbr/)
+-   [React Hook Form](https://react-hook-form.com/)
+-   [Zod](https://zod.dev/)
+-   [MaterialUI](https://mui.com/)
+-   [Jest](https://jestjs.io/pt-BR/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 📄 User Stories
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 1. Tabela de Usuários:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   [x] -   Lista de Usuários
+-   [x] -   Adicionar informações sobre Posts e Álbuns
+-   [x] -   Criar endpoints que retornem Dias da Semana e cidades
+-   [x] -   Ícone de lixeira no hover do item da lista
+-   [ ] -   Campo blocked para true ???
 
-## Learn More
+##### Bônus:
 
-To learn more about Next.js, take a look at the following resources:
+-   [x] -   Campo de busca e filtro por username e nome do usuário
+-   [x] -   Header fixado ao topo
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### 2. Formulário de novos usuários
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-   [x] -   Formulário que cadastra o usuário
+-   [x] -   Imediatamente aparecer na tabela (Redirecionar para tabela)
+-   [x] -   Formulário deve ter todas as informações removidas
 
-## Deploy on Vercel
+##### Bônus:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   [ ] -   O formulário deve ser processado server side
+-   [x] -   Agrupar os dias da semana de forma programática
+-   [x] -   Validação de formulário antes do envio
+-   [x] -   Botões e inputs com o estilo definido pelo layout
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### 3. Roteamento
+
+-   [x] -   Rota de usuário dinâmica acessível em /user/[username]
+-   [x] -   Exibir informações básicas na página de perfil
+-   [x] -   Garantir que a página de usuário não encontrado seja exibida de forma elegante
+-   [x] -   Tabela de usuários na rota /user e o formulário em /user/new
+-   [ ] -   Redirecionar de volta para a página de usuários e revalidar as informações ???
+-   [x] -   UI de fallback quando os dados estão sendo buscados
+-   [x] -   Header de acordo com a página
+
+#### 4. Breadcrumb
+
+-   [x] -   Breadcrumb acompanhando a rota
+-   [x] -   Clicar em um item deve redirecionar para página esperada
+
+#### 5. Menu dropdown
+
+-   [ ] -   Dropdown ao clicar na imagem de usuário ou nome
+-   [ ] -   Endpoint simulado ou um método que sustente os dados do usuário JSON
+
+##### Bônus:
+
+-   [ ] -   Deduza as iniciais do usuário e use-o para o espaço reservado e foto do perfil
+
+##### Outros:
+
+-   [ ] -   Implemente o resto do layout
+-   [ ] -   Testes

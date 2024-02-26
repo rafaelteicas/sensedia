@@ -4,8 +4,6 @@ import { RegisterUserType, UserType } from "./user-types";
 
 async function getAllUsers(): Promise<UserType[]> {
     const response = await userAPI.getAllUsers();
-    console.log(response);
-
     return response.map((user) => userAdapter.toUser(user));
 }
 

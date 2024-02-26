@@ -13,9 +13,16 @@ export function useRemoveUser(options?: MutationOptions) {
             }
             queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
         },
-        onError: (error) => {
-            console.log(error);
+        onError: () => {
+            if (options?.onError) {
+                options.onError();
+            }
         },
+        onSettled: () => {
+            if (options?.onSettled) {
+                options.onSettled();
+            }
+        }
     });
     return {
         remove: (id: string) => mutation.mutate(id),

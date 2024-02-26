@@ -4,7 +4,7 @@ import { bannerItems } from "./banner-items";
 
 export function Banner() {
     return (
-        <div className="flex flex-1 bg-purple-950 h-[100px] items-center justify-center text-white gap-8">
+        <div className="flex bg-purple-950 h-[100px] w-screen items-center justify-center text-white gap-8 -mx-72">
             {bannerItems.map((item) => (
                 <div className="flex gap-2" key={item.alt}>
                     <Image

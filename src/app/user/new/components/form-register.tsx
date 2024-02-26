@@ -1,0 +1,134 @@
+"use client";
+
+import React, { useState } from "react";
+import { Input, Button } from "@/components";
+import { useForm } from "react-hook-form";
+import {
+    RegisterSchema,
+    registerDays,
+    registerSchema,
+} from "./register-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useToast } from "@/service";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useRegisterUser } from "@/domain";
+import { Checkbox, FormControlLabel } from "@mui/material";
+
+export const fields: { id: keyof RegisterSchema; label: string }[] = [
+    { id: "username", label: "Nome de usuário" },
+    { id: "name", label: "Nome completo" },
+    { id: "email", label: "E-mail" },
+    { id: "city", label: "Cidade" },
+];
+
+export function FormRegister() {
+    const [checkedLabel, setCheckedLabel] = useState<string[]>([]);
+    const { setToast } = useToast();
+    const queryClient = useQueryClient();
+    const { push } = useRouter();
+    const { register, handleSubmit, setValue, reset, watch, formState } =
+        useForm<RegisterSchema>({
+            resolver: zodResolver(registerSchema),
+            mode: "onChange",
+        });
+
+    console.log(watch("city"));
+
+    function handleCheckedLabel(e: React.ChangeEvent<HTMLInputElement>) {
+        let value: string[];
+        if (e.target.checked) {
+            value = [...checkedLabel, e.target.value];
+            setCheckedLabel(value);
+        } else {
+            value = checkedLabel.filter((label) => label !== e.target.value);
+            setCheckedLabel(value);
+        }
+        setValue("days", value as any);
+    }
+
+    function resetFn() {
+        setCheckedLabel([]);
+        reset();
+    }
+
+    const { registerUser, isPending } = useRegisterUser({
+        onSuccess: () => {
+            setToast({
+                icon: "success",
+                message: "Usuário cadastrado com sucesso!",
+            });
+            resetFn();
+            queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
+            push("/user");
+        },
+    });
+
+    function sendForm(data: RegisterSchema) {
+        registerUser(data);
+    }
+
+    return (
+        <form onSubmit={handleSubmit(sendForm)}>
+            <div className="grid grid-flow-col-dense gap-4 grid-cols-2 grid-rows-3">
+                {fields.map((field, index) => (
+                    <>
+                        <Input
+                            key={field.id}
+                            required
+                            id={field.id}
+                            label={field.label}
+                            InputProps={{ ...register(field.id) }}
+                            className={
+                                index < 3
+                                    ? "col-start-1 row-span-1"
+                                    : "col-start-2 row-span-full"
+                            }
+                        />
+                    </>
+                ))}
+                <div className="col-start-2 row-start-2 row-span-full">
+                    <p className="text-sm font-medium text-gray-650 py-2">
+                        DIAS DA SEMANA
+                    </p>
+                    <div className="grid grid-cols-3">
+                        {registerDays.map((day) => (
+                            <FormControlLabel
+                                {...register("days")}
+                                key={day}
+                                label={day}
+                                control={
+                                    <Checkbox
+                                        checked={checkedLabel.includes(day)}
+                                        value={day}
+                                        onChange={handleCheckedLabel}
+                                    />
+                                }
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-center gap-4 pt-8">
+                <Button
+                    type="submit"
+                    className="bg-purple-950 text-white px-4 py-2 text-sm font-medium rounded-3xl"
+                    disabled={
+                        !formState.isValid ||
+                        formState.isSubmitting ||
+                        isPending
+                    }
+                >
+                    REGISTRAR
+                </Button>
+                <Button
+                    type="button"
+                    className="text-purple-950 text-sm font-medium"
+                    onClick={resetFn}
+                >
+                    CANCELAR
+                </Button>
+            </div>
+        </form>
+    );
+}
