@@ -1,8 +1,22 @@
-import { useContext } from "react";
-import { ToastContext } from "./toast-provider";
+import { create } from "zustand";
+import { ToastTypes } from "./toast-types";
+
+const useToastStore = create<ToastTypes>((set) => ({
+    toast: null,
+    setToast: (toast) => set({ toast }),
+    hideToast: () => set({ toast: null }),
+}));
 
 export function useToast() {
-    const context = useContext(ToastContext);
-    if (!context) throw new Error("Should be have a context");
-    return context;
+    const setToast = useToastStore((state) => state.setToast);
+    const hideToast = useToastStore((state) => state.hideToast);
+
+    return {
+        setToast,
+        hideToast,
+    };
+}
+
+export function useToastZustand() {
+    return useToastStore((state) => state.toast);
 }

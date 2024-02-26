@@ -1,10 +1,13 @@
-import React, { useMemo, useState } from "react";
+"use client";
+
+import React, { useEffect, useMemo, useState } from "react";
 
 import { UserType, useGetAllUsers, useRemoveUser } from "@/domain";
 import { useModal, useToast } from "@/service";
 import { Search, Trash } from "@/assets";
-import { Input } from "@/components";
+import { Input, Pagination } from "@/components";
 import { Skeleton } from "@mui/material";
+import { getPagination } from "@/utils";
 
 const heads = [
     "",
@@ -21,21 +24,32 @@ type Props = {
     data: UserType[] | undefined;
     isLoading: boolean;
     isError: boolean;
+    isFetching: boolean;
+    refetch: () => void;
 };
 
-export default function UserTable({ data, isError, isLoading }: Props) {
+export function UserTable({
+    data,
+    isError,
+    isLoading,
+    isFetching,
+    refetch,
+}: Props) {
     const [search, setSearch] = useState("");
     const { setToast } = useToast();
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
     const { setModal, hideModal } = useModal();
+
     const filteredUsers = useMemo(() => {
         if (!data) return;
-        return data.filter(
+        const filteredData = data.filter(
             (user) =>
                 user.name.toLowerCase().includes(search.toLowerCase()) ||
                 user.username.toLowerCase().includes(search.toLowerCase())
         );
+        return getPagination(filteredData, 1, 1);
     }, [data, search]);
+
     const { remove } = useRemoveUser({
         onSuccess: () => {
             setToast({
@@ -51,81 +65,79 @@ export default function UserTable({ data, isError, isLoading }: Props) {
         },
         onSettled: hideModal,
     });
+
     function handleDelete(user: UserType) {
         setModal(<Modal id={user.id} hideModal={hideModal} remove={remove} />);
     }
-    if (isLoading) {
+
+    if (isLoading || isFetching) {
         return (
-            <div className="flex flex-1 flex-col">
-                <h1 className="text-2xl bold my-10">Usuários</h1>
-                <Input
-                    label="Procurar"
-                    LeftIcon={<Search />}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <table className="border-t">
-                    <Header>
-                        {heads.map((head) => (
-                            <th key={head}>{head}</th>
-                        ))}
-                    </Header>
-                    <tbody>
-                        <tr>
-                            {heads.map((head) => (
-                                <td key={head}>
-                                    <Skeleton />
-                                </td>
-                            ))}
-                        </tr>
-                    </tbody>
-                </table>
+            <TableLayout
+                TableBody={heads.map((head) => (
+                    <th key={head}>
+                        <Skeleton />
+                    </th>
+                ))}
+                TableHeader={heads.map((head) => (
+                    <th key={head}>{head}</th>
+                ))}
+                inputFn={(e) => setSearch(e.target.value)}
+            />
+        );
+    }
+
+    if (isError) {
+        return (
+            <div className="flex flex-1 items-center justify-center flex-col gap-4">
+                <p className="text-2xl font-bold">
+                    Não foi possível realizar a busca!
+                </p>
+                <a
+                    onClick={refetch}
+                    className="p-2 font-medium text-blue-600 cursor-pointer"
+                >
+                    Buscar novamente
+                </a>
             </div>
         );
     }
+
     return (
-        <table className="min-w-full border-t mt-6">
-            <Header>
-                {heads.map((head) => (
-                    <th key={head}>{head}</th>
-                ))}
-            </Header>
-            <tbody>
-                {filteredUsers?.map((user) => (
-                    <tr
-                        key={user.id}
-                        className={styles.rowContainer}
-                        onMouseEnter={() => setHoveredRow(user.id)}
-                    >
-                        <td className="h-[100px]">
-                            {hoveredRow === user.id && (
-                                <div onClick={() => handleDelete(user)}>
-                                    <Trash
-                                        color="red"
-                                        className="cursor-pointer ml-2"
-                                    />
-                                </div>
-                            )}
-                        </td>
-                        <td className="text-gray-850 font-bold">
-                            {user.username}
-                        </td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.city}</td>
-                        <td>{user.days}</td>
-                        <td>{user.posts}</td>
-                        <td>{user.albums}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+        <TableLayout
+            TableHeader={heads.map((head) => (
+                <th key={head}>{head}</th>
+            ))}
+            TableBody={filteredUsers?.map((user) => (
+                <tr
+                    key={user.id}
+                    className={styles.rowContainer}
+                    onMouseEnter={() => setHoveredRow(user.id)}
+                >
+                    <td className="h-[100px]">
+                        {hoveredRow === user.id && (
+                            <div onClick={() => handleDelete(user)}>
+                                <Trash color="red" className="cursor-pointer" />
+                            </div>
+                        )}
+                    </td>
+                    <td className="text-gray-850 font-bold">{user.username}</td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{user.city}</td>
+                    <td>{user.days}</td>
+                    <td>{user.posts}</td>
+                    <td>{user.albums}</td>
+                </tr>
+            ))}
+            inputFn={(e) => setSearch(e.target.value)}
+        />
     );
 }
 
 function Header({ children }: React.PropsWithChildren) {
     return (
         <thead className={styles.headerContainer}>
-            <tr className="pl-1">{children}</tr>
+            <tr>{children}</tr>
         </thead>
     );
 }
@@ -162,8 +174,27 @@ function Modal({ id, hideModal, remove }: ModalProps) {
     );
 }
 
+type TableProps = {
+    inputFn: (e: any) => void;
+    TableHeader: React.ReactNode;
+    TableBody: React.ReactNode;
+};
+
+function TableLayout({ inputFn, TableHeader, TableBody }: TableProps) {
+    return (
+        <div className="flex flex-1 flex-col">
+            <h1 className="text-2xl bold my-10">Usuários</h1>
+            <Input label="Procurar" LeftIcon={<Search />} onChange={inputFn} />
+            <table className="border-t">
+                <Header>{TableHeader}</Header>
+                <tbody>{TableBody}</tbody>
+            </table>
+        </div>
+    );
+}
+
 const styles = {
     headerContainer: "font-bold text-gray-650 text-left text-sm border-b",
     rowContainer:
-        "text-gray-550 text-base font-normal border-b hover:bg-gray-100",
+        "text-gray-550 text-base font-normal border-b hover:bg-gray-100 ",
 };

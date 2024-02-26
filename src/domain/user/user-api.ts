@@ -1,7 +1,7 @@
 import { api } from "@/api/api-config";
 import { RegisterUserType, UserResponseType } from "./user-types";
 
-const USER_PATH = "/users";
+export const USER_PATH = "/users";
 
 async function getAllUsers(): Promise<UserResponseType[]> {
     const response = await api.get(USER_PATH);

@@ -4,3 +4,4 @@ export * from "./input/input";
 export * from "./modal/modal";
 export * from "./button/button";
 export * from "./toast/toast";
+export * from "./pagination/pagination";

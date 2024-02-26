@@ -1,14 +1,8 @@
-import { Banner } from "@/components";
 import React from "react";
+import { Banner } from "@/components";
 import { FormLogin } from "./components/form-login";
-import { auth } from "../api/auth";
-import { redirect } from "next/navigation";
 
 export default async function Auth() {
-    const session = await auth();
-    if (session) {
-        redirect("/user");
-    }
     return (
         <>
             <Banner />

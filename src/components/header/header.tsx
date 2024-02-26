@@ -4,33 +4,40 @@ import React, { useState } from "react";
 
 import { Arrow, Help, Apps, Icon, Logo } from "@/assets";
 import { usePathname, useRouter } from "next/navigation";
+import { User } from "next-auth";
+import { DropdownHeader } from "./dropdown-header";
+import { Button } from "..";
+import { getInitialsAvatar } from "./get-initals-avatar";
+import { getBreadcrumb } from "./get-breadcrumb";
 
-export function Header() {
+type Props = {
+    user?: User;
+};
+
+export function Header({ user }: Props) {
     const path = usePathname();
+    const [dropdown, setDropdown] = useState(false);
     const breadcrumbs = path!!.split("/").filter((path) => path);
     const { push } = useRouter();
-    const [dropdown, setDropdown] = useState(false);
 
     return (
         <>
-            <div className="w-full h-20 bg-gray-850 text-white flex items-center gap-2 pl-8">
+            <div className={styles.firstHeaderContainer}>
                 <Icon />
                 <div>
                     <Logo />
                     <p className="text-xs">Treinador De Futebol</p>
                 </div>
             </div>
-            <div className="w-full h-16 sticky top-0 bg-white border-b flex items-center pr-8 pl-8 gap-4 z-10">
+            <div className={styles.secondHeaderContainer}>
                 <div className="flex flex-1 gap-2">
-                    <button
+                    <a
                         onClick={() => push("/")}
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-2 cursor-pointer"
                     >
                         <Icon color="#8556AA" />
-                        <p className="text-purple-950 font-bold uppercase text-sm">
-                            Bem vindo
-                        </p>
-                    </button>
+                        <p className={styles.welcome}>Bem vindo</p>
+                    </a>
                     {breadcrumbs.map((breadcrumb, index) => (
                         <div
                             key={breadcrumb}
@@ -47,37 +54,48 @@ export function Header() {
                                     )
                                 }
                             >
-                                {breadcrumb}
+                                {getBreadcrumb(breadcrumb)}
                             </p>
                         </div>
                     ))}
                 </div>
                 <Help />
                 <Apps />
-                <button
-                    className="relative flex items-center gap-2 border-l"
-                    onClick={() => setDropdown((cur) => !cur)}
-                >
-                    <div className="bg-purple-950 rounded-full w-10 h-10 items-center flex justify-center ml-4 ">
-                        <p className="text-sm text-white">UN</p>
-                    </div>
-                    <p className="text-sm text-gray75">Nome de usuário</p>
-                    {dropdown && (
-                        <>
-                            <div
-                                className="absolute right-2 top-[52px] text-gray-50 bg-gray-850 flex flex-col gap-4 p-4"
-                                onMouseLeave={() => setDropdown(false)}
-                            >
-                                <p>Lista de amigos</p>
-                                <p>Amigos salvos</p>
-                                <p>Notificações</p>
-                                <p>Preferências</p>
-                                <p>Fechar sessão</p>
+                <div className="border-l">
+                    {user ? (
+                        <button
+                            className="relative flex items-center gap-2 "
+                            onClick={() => setDropdown((cur) => !cur)}
+                        >
+                            <div className={styles.userAvatar}>
+                                <p className="text-sm text-white">
+                                    {getInitialsAvatar(user.name || "")}
+                                </p>
                             </div>
-                        </>
+                            <p className="text-sm text-gray75">{user.name}</p>
+                            {dropdown && (
+                                <DropdownHeader
+                                    onMouseLeave={() => setDropdown(false)}
+                                />
+                            )}
+                        </button>
+                    ) : (
+                        <Button preset="primary" className="ml-4">
+                            Criar conta
+                        </Button>
                     )}
-                </button>
+                </div>
             </div>
         </>
     );
 }
+
+const styles = {
+    firstHeaderContainer:
+        "w-full h-20 bg-gray-850 text-white flex items-center gap-2 pl-8",
+    secondHeaderContainer:
+        "w-full h-16 sticky top-0 bg-white border-b flex items-center pr-8 pl-8 gap-4 z-10",
+    welcome: "text-purple-950 font-bold uppercase text-sm cursor-pointer",
+    userAvatar:
+        "bg-purple-950 rounded-full w-10 h-10 items-center flex justify-center ml-4",
+};

@@ -34,10 +34,7 @@ export function FormLogin() {
                 />
             </div>
             <div className="flex items-center gap-4 pt-8">
-                <Button
-                    type="submit"
-                    className="bg-purple-950 text-white px-4 py-2 text-sm font-medium rounded-3xl"
-                >
+                <Button type="submit" preset="primary">
                     Entrar
                 </Button>
             </div>

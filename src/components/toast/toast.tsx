@@ -1,9 +1,11 @@
 import { Success } from "@/assets";
-import { useToast } from "@/service/toast/use-toast";
-import React, { useEffect } from "react";
+import { useToast, useToastZustand } from "@/service";
+import React from "react";
 
 export function Toast() {
-    const { toast, hideToast } = useToast();
+    const toast = useToastZustand();
+    const { hideToast } = useToast();
+
     if (!toast) return;
     setTimeout(() => hideToast(), 2000);
     return (

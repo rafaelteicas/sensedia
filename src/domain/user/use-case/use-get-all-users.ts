@@ -4,6 +4,7 @@ import { userService } from "../user-service";
 export function useGetAllUsers() {
     const query = useQuery({
         queryKey: ["getAllUsers"],
+        retry: false,
         queryFn: () => userService.getAllUsers(),
     });
 
@@ -11,5 +12,7 @@ export function useGetAllUsers() {
         data: query.data,
         isLoading: query.isLoading,
         isError: query.isError,
+        isFetching: query.isFetching,
+        refetch: query.refetch,
     };
 }

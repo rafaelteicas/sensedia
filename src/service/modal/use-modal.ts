@@ -1,8 +1,22 @@
-import { useContext } from "react";
-import { ModalContext } from "./modal-provider";
+import { create } from "zustand";
+import { ModalTypes } from "./modal-types";
 
 export function useModal() {
-    const context = useContext(ModalContext);
-    if (!context) throw new Error("Should be have a context");
-    return context;
+    const setModal = useModalStore((state) => state.setModal);
+    const hideModal = useModalStore((state) => state.hideModal);
+
+    return {
+        setModal,
+        hideModal,
+    };
 }
+
+export function useModalZustand() {
+    return useModalStore((state) => state.modal);
+}
+
+const useModalStore = create<ModalTypes>((set) => ({
+    modal: null,
+    setModal: (modal) => set({ modal }),
+    hideModal: () => set({ modal: null }),
+}));

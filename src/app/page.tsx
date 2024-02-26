@@ -1,15 +1,14 @@
-import { Banner } from "@/components";
-import { FormLogin } from "./auth/components/form-login";
-import { auth } from "@/app/api/auth";
+import React from "react";
+import { auth } from "./api/auth";
 import { redirect } from "next/navigation";
 
-export default async function Home() {
+export default async function Page() {
     const session = await auth();
+
     if (session) {
         redirect("/user");
     } else {
         redirect("/auth");
     }
-
-    return <></>;
+    return <div></div>;
 }

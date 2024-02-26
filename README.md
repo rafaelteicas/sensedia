@@ -14,6 +14,7 @@ Aplicação em Next.js desenvolvida para a etapa seletiva.
 -   [Axios](https://axios-http.com/ptbr/)
 -   [React Hook Form](https://react-hook-form.com/)
 -   [Zod](https://zod.dev/)
+-   [Zustand](https://zustand-demo.pmnd.rs/)
 -   [MaterialUI](https://mui.com/)
 -   [Jest](https://jestjs.io/pt-BR/)
 
@@ -62,12 +63,12 @@ Aplicação em Next.js desenvolvida para a etapa seletiva.
 
 #### 5. Menu dropdown
 
--   [ ] -   Dropdown ao clicar na imagem de usuário ou nome
--   [ ] -   Endpoint simulado ou um método que sustente os dados do usuário JSON
+-   [x] -   Dropdown ao clicar na imagem de usuário ou nome
+-   [x] -   Endpoint simulado ou um método que sustente os dados do usuário JSON
 
 ##### Bônus:
 
--   [ ] -   Deduza as iniciais do usuário e use-o para o espaço reservado e foto do perfil
+-   [x] -   Deduza as iniciais do usuário e use-o para o espaço reservado e foto do perfil
 
 ##### Outros:
 
