@@ -27,13 +27,11 @@ export function FormRegister() {
     const { setToast } = useToast();
     const queryClient = useQueryClient();
     const { push } = useRouter();
-    const { register, handleSubmit, setValue, reset, watch, formState } =
+    const { register, handleSubmit, setValue, reset, formState } =
         useForm<RegisterSchema>({
             resolver: zodResolver(registerSchema),
             mode: "onChange",
         });
-
-    console.log(watch("city"));
 
     function handleCheckedLabel(e: React.ChangeEvent<HTMLInputElement>) {
         let value: string[];

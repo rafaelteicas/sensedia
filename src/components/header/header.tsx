@@ -9,6 +9,7 @@ import { DropdownHeader } from "./dropdown-header";
 import { Button } from "..";
 import { getInitialsAvatar } from "./get-initals-avatar";
 import { getBreadcrumb } from "./get-breadcrumb";
+import Link from "next/link";
 
 type Props = {
     user?: User;
@@ -81,7 +82,7 @@ export function Header({ user }: Props) {
                         </button>
                     ) : (
                         <Button preset="primary" className="ml-4">
-                            Criar conta
+                            <Link href={"/auth/new"}>Criar conta</Link>
                         </Button>
                     )}
                 </div>

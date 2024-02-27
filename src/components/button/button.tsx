@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from "react";
 
-type Preset = "ghost" | "primary";
+type Preset = "ghost" | "primary" | "outlined";
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     className?: string;
     disabled?: boolean;
@@ -10,7 +10,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 export function Button({
     children,
     disabled,
-    preset,
+    preset = "primary",
     className = "",
     ...buttonProps
 }: Props) {
@@ -33,9 +33,11 @@ export function Button({
 function getButtonPreset(preset?: Preset) {
     switch (preset) {
         case "primary":
-            return "bg-purple-950 text-white px-4 py-2 text-sm font-medium rounded-3xl";
+            return "bg-purple-950 text-white px-4 py-2 text-sm font-medium rounded-3xl uppercase";
         case "ghost":
-            return "text-purple-950 text-sm font-medium";
+            return "text-purple-950 text-sm font-medium uppercase";
+        case "outlined":
+            return "uppercase text-gray-750 border-2 rounded-3xl px-4 py-2 text-xs font-medium border-gray-250";
         default:
             "";
     }

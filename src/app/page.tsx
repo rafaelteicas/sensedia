@@ -1,5 +1,5 @@
 import React from "react";
-import { auth } from "./api/auth";
+import { auth } from "./lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Page() {

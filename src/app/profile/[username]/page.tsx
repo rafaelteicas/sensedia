@@ -1,5 +1,6 @@
 "use client";
 
+import { getInitialsAvatar } from "@/components/header/get-initals-avatar";
 import { useGetUserById } from "@/domain";
 import { Skeleton } from "@mui/material";
 import React from "react";
@@ -39,7 +40,9 @@ export default function UserProfile({
     return (
         <div className={styles.container}>
             <div className="size-20 rounded-full bg-purple-950 flex justify-center items-center">
-                <p className="text-white font-bold text-2xl">RC</p>
+                <p className="text-white font-bold text-2xl">
+                    {getInitialsAvatar(data.name)}
+                </p>
             </div>
             <p>Informações de usuário</p>
             <div className={styles.userContainerStyle}>

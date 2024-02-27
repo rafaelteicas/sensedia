@@ -18,6 +18,30 @@ Aplicação em Next.js desenvolvida para a etapa seletiva.
 -   [MaterialUI](https://mui.com/)
 -   [Jest](https://jestjs.io/pt-BR/)
 
+### ⚙️ Configurações
+
+##### Instalar dependências
+
+```
+yarn  # Ou qualquer outro gerenciador
+```
+
+##### Criar arquivo .env
+
+Copiar as variáveis de ambiente abaixo ou arquivo `.env.sample` da raiz do projeto para um arquivo .env
+
+```
+DB_URL="postgres://user:password@host:port/db"
+SECRET="SECRET"
+API_URL="http://localhost:3000/api"
+```
+
+##### Rodar o projeto
+
+```
+yarn dev
+```
+
 ### 📄 User Stories
 
 #### 1. Tabela de Usuários:

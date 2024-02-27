@@ -3,7 +3,6 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components";
 import { Provider } from "@/utils/provider";
-import { auth } from "./api/auth";
 
 const font = Roboto({
     weight: ["100", "300", "400", "500", "700", "900"],
@@ -19,7 +18,6 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const session = await auth();
     return (
         <html lang="pt-BR">
             <head>
@@ -28,7 +26,7 @@ export default async function RootLayout({
             <body className={font.className}>
                 <div className="flex flex-1 flex-col min-h-screen">
                     <Provider>
-                        <Header user={session?.user} />
+                        <Header />
                         <div className="flex flex-1 flex-col px-72">
                             {children}
                         </div>

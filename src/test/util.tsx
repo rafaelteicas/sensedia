@@ -7,7 +7,6 @@ import {
     render,
     renderHook,
 } from "@testing-library/react";
-
 export const wrapper = () => {
     const queryClient = new QueryClient({
         defaultOptions: {

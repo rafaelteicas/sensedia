@@ -14,5 +14,10 @@ const config: Config = {
     testEnvironmentOptions: {
         customExportConditions: [""],
     },
+    moduleDirectories: ["node_modules", "<rootDir>/"],
+    rootDir: __dirname,
+    moduleNameMapper: {
+        "#(.*)": "<rootDir>/node_modules/$1",
+    },
 };
 export default createJestConfig(config);

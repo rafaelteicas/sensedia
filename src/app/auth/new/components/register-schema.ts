@@ -18,7 +18,7 @@ function getDays(day: Days[]) {
     if (registerDays.every((values) => day.includes(values as Days))) {
         return "Todos os dias";
     }
-    if (day.includes("Sab" && "Dom")) {
+    if (day[0] === "Sab" && day[1] === "Dom") {
         return "Final de semana";
     }
     return day.map((value) => days[value]).join(", ");

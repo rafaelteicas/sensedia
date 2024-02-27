@@ -28,4 +28,5 @@ export type RegisterUserType = {
     username: string;
     city: string;
     days: string;
+    password?: string;
 };

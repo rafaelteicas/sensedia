@@ -11,8 +11,11 @@ async function removeUser(id: string) {
     await userAPI.removeUser(id);
 }
 
-async function registerUser(data: RegisterUserType): Promise<void> {
-    await userAPI.registerUser(data);
+async function registerUser(
+    data: RegisterUserType,
+    password: string = "Senha123"
+): Promise<void> {
+    await userAPI.registerUser({ ...data, password });
 }
 
 async function getUserById(userId: string): Promise<UserType> {

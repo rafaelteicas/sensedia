@@ -1,8 +1,8 @@
 export function getPagination(
     items: any[],
-    pageNumber: number,
-    pageSize: number
+    currentPage: number,
+    perPage: number
 ) {
-    const startIndex = (pageNumber - 1) * pageSize;
-    return items.slice(startIndex, startIndex + pageSize); // 0, 9
+    const startIndex = (currentPage - 1) * perPage;
+    return items.slice(startIndex, startIndex + perPage);
 }
