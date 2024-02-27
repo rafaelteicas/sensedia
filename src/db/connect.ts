@@ -1,7 +1,9 @@
-import { drizzle } from "drizzle-orm/postgres-js";
+import { drizzle } from "drizzle-orm/vercel-postgres";
 import * as schema from "./schema";
-import postgres from "postgres";
+import { createPool } from "@vercel/postgres";
 
-const client = postgres(process.env.POSTGRES_URL! || process.env.DB_URL!);
+const pool = createPool({
+    connectionString: process.env.POSTGRES_URL! || process.env.DB_URL!,
+});
 
-export const db = drizzle(client, { schema });
+export const db = drizzle(pool, { schema });

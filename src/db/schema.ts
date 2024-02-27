@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
     integer,
     pgTable,
@@ -51,3 +52,42 @@ export const sessions = pgTable("session", {
         .references(() => users.id, { onDelete: "cascade" }),
     expires: timestamp("expires", { mode: "date" }).notNull(),
 });
+
+export const posts = pgTable("posts", {
+    id: uuid("id").primaryKey().notNull(),
+    user_id: text("user_id")
+        .unique()
+        .references(() => users.id, { onDelete: "cascade" }),
+    content: text("content"),
+    created_at: timestamp("created_at").defaultNow().notNull(),
+    updated_at: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const albums = pgTable("user_albums", {
+    id: uuid("id").primaryKey().notNull(),
+    user_id: text("user_id")
+        .unique()
+        .references(() => users.id, { onDelete: "cascade" }),
+    content: text("content"),
+    created_at: timestamp("created_at").defaultNow().notNull(),
+    updated_at: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const usersRelations = relations(users, ({ many }) => ({
+    posts: many(posts),
+    albums: many(albums),
+}));
+
+export const postsRelations = relations(posts, ({ one }) => ({
+    author: one(users, {
+        fields: [posts.user_id],
+        references: [users.id],
+    }),
+}));
+
+export const albumsRelations = relations(albums, ({ one }) => ({
+    author: one(users, {
+        fields: [albums.user_id],
+        references: [users.id],
+    }),
+}));

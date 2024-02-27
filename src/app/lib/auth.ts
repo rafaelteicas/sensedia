@@ -12,11 +12,12 @@ export const {
     adapter: DrizzleAdapter(db),
     session: {
         strategy: "jwt",
+        maxAge: 1 * 24 * 60 * 60,
     },
     jwt: {
         maxAge: 60 * 60 * 24 * 30,
     },
-    secret: process.env.SECRET,
+    secret: [process.env.SECRET, process.env.NEXTAUTH_SECRET] as string[],
     providers: [
         Credentials({
             credentials: { email: {}, password: {} },
