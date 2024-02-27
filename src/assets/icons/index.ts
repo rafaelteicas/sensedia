@@ -9,4 +9,7 @@ export * from "./heart";
 export * from "./grin-alt";
 export * from "./basket";
 export * from "./trophy";
+export * from "./trophy";
+export * from "./trophy";
 export * from "./align-left";
+export * from "./error";

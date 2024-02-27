@@ -3,6 +3,7 @@
 import React, { FormEvent } from "react";
 import { Input, Button } from "@/components";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 export function FormLogin() {
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -14,7 +15,6 @@ export function FormLogin() {
             callbackUrl: "/user",
         });
     }
-
     return (
         <form onSubmit={handleSubmit}>
             <div className="gap-8 grid">
@@ -36,6 +36,9 @@ export function FormLogin() {
             <div className="flex items-center gap-4 pt-8">
                 <Button type="submit" preset="primary">
                     Entrar
+                </Button>
+                <Button type="button" preset="ghost">
+                    <Link href={"/auth/new"}>Criar conta</Link>
                 </Button>
             </div>
         </form>

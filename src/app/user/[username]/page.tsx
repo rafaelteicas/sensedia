@@ -1,6 +1,6 @@
 "use client";
 
-import { getInitialsAvatar } from "@/components/header/get-initals-avatar";
+import { getInitialsAvatar } from "@/components/header/get-initials-avatar";
 import { useGetUserById } from "@/domain";
 import { Skeleton } from "@mui/material";
 import React from "react";

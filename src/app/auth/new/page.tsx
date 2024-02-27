@@ -1,8 +1,7 @@
 import React from "react";
-import { FormRegister } from "./components/form-register";
-import { HelpRegister } from "./components/help-register";
+import { FormRegister, HelpRegister } from "@/components";
 
-export default async function Register() {
+export default function Register() {
     return (
         <>
             <h1 className="text-2xl bold my-8">Registro</h1>

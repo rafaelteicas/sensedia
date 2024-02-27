@@ -7,7 +7,6 @@ import { Trash } from "@/assets";
 import { Skeleton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { getPagination } from "@/utils";
-import { auth } from "@/app/lib/auth";
 
 export const heads = [
     "",

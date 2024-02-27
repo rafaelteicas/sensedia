@@ -1,4 +1,4 @@
-import { db } from "@/db/connect";
+import { db } from "@/db";
 import { albums, posts, users } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
@@ -10,5 +10,5 @@ export async function GET() {
         full outer join ${albums} a on a.user_id = u.id
         group by u.id`
     );
-    return NextResponse.json({ users: response.rows });
+    return NextResponse.json({ users: response.rows[0] });
 }

@@ -2,13 +2,12 @@
 
 import { useGetAllUsers } from "@/domain";
 import React, { useState } from "react";
-import { UserTable, heads } from "./components/user-table";
 import { Search } from "@/assets";
-import { Input, Pagination } from "@/components";
+import { Input, Pagination, UserTable, heads } from "@/components";
 
 export default function User() {
-    const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
     const { data, isLoading, isError, isFetching, refetch } = useGetAllUsers({
         search,
     });
@@ -29,8 +28,6 @@ export default function User() {
         );
     }
 
-    if (data) {
-    }
     return (
         <>
             <div className="flex flex-col gap-8 pb-8">
@@ -44,7 +41,7 @@ export default function User() {
                     <thead className={styles.headerContainer}>
                         <tr>
                             {heads.map((head) => (
-                                <th className="py-2" key={head}>
+                                <th className={"py-2 px-2"} key={head}>
                                     {head}
                                 </th>
                             ))}
@@ -80,5 +77,5 @@ export default function User() {
 }
 
 const styles = {
-    headerContainer: "font-bold text-gray-650 text-left text-sm border-b ",
+    headerContainer: "font-bold text-left text-gray-650 text-xs border-b",
 };

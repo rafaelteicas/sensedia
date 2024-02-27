@@ -1,4 +1,4 @@
-import { Success } from "@/assets";
+import { Success, Error } from "@/assets";
 import { useToast, useToastZustand } from "@/service";
 import React from "react";
 
@@ -20,7 +20,7 @@ export function Toast() {
                 </div>
             ) : (
                 <div className="flex flex-1 flex-row gap-4">
-                    <Success className="fill-rose-500 w-6 " />
+                    <Error className="fill-rose-500 w-6 " />
                     <div className="flex flex-col">
                         <p className="font-bold">Erro</p>
                         {toast?.message}

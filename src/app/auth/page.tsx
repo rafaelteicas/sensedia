@@ -1,6 +1,5 @@
 import React from "react";
-import { Banner } from "@/components";
-import { FormLogin } from "./components/form-login";
+import { Banner, FormLogin } from "@/components";
 
 export default function Auth() {
     return (

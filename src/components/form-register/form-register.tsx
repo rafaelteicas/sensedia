@@ -11,7 +11,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/service";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { useRegisterUser } from "@/domain";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
@@ -26,7 +25,6 @@ export function FormRegister() {
     const [checkedLabel, setCheckedLabel] = useState<string[]>([]);
     const { setToast } = useToast();
     const queryClient = useQueryClient();
-    const { push } = useRouter();
     const { register, handleSubmit, setValue, reset, formState } =
         useForm<RegisterSchema>({
             resolver: zodResolver(registerSchema),
@@ -51,14 +49,18 @@ export function FormRegister() {
     }
 
     const { registerUser, isPending } = useRegisterUser({
-        onSuccess: () => {
+        onSuccess: async () => {
             setToast({
                 icon: "success",
                 message: "Usuário cadastrado com sucesso!",
             });
-            resetFn();
             queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
-            push("/user");
+        },
+        onError: () => {
+            setToast({
+                icon: "error",
+                message: "Não foi possível cadastrar o usuário!",
+            });
         },
     });
 
@@ -92,8 +94,8 @@ export function FormRegister() {
                     <div className="grid grid-cols-3">
                         {registerDays.map((day) => (
                             <FormControlLabel
-                                {...register("days")}
                                 key={day}
+                                {...register("days")}
                                 label={day}
                                 control={
                                     <Checkbox

@@ -5,3 +5,7 @@ export * from "./modal/modal";
 export * from "./button/button";
 export * from "./toast/toast";
 export * from "./pagination/pagination";
+export * from "./form-login/form-login";
+export * from "./form-register/form-register";
+export * from "./form-register/help-register";
+export * from "./user-table/user-table";

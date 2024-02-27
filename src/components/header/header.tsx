@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-
 import { Arrow, Help, Apps, Icon, Logo } from "@/assets";
 import { usePathname, useRouter } from "next/navigation";
 import { User } from "next-auth";
 import { DropdownHeader } from "./dropdown-header";
 import { Button } from "..";
-import { getInitialsAvatar } from "./get-initals-avatar";
+import { getInitialsAvatar } from "./get-initials-avatar";
 import { getBreadcrumb } from "./get-breadcrumb";
 import Link from "next/link";
 
@@ -20,7 +19,6 @@ export function Header({ user }: Props) {
     const [dropdown, setDropdown] = useState(false);
     const breadcrumbs = path!!.split("/").filter((path) => path);
     const { push } = useRouter();
-
     return (
         <>
             <div className={styles.firstHeaderContainer}>
@@ -82,7 +80,7 @@ export function Header({ user }: Props) {
                         </button>
                     ) : (
                         <Button preset="primary" className="ml-4">
-                            <Link href={"/auth/new"}>Criar conta</Link>
+                            <Link href={"/auth"}>Login</Link>
                         </Button>
                     )}
                 </div>

@@ -1,4 +1,4 @@
-import { db } from "@/db/connect";
+import { db } from "@/db/connect-env";
 import { users } from "@/db/schema";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -7,9 +7,11 @@ Para visualizar o projeto em produção basta acessar o link:
 ```
 https://sensedia-two.vercel.app/auth
 ```
+
 OBS:
-- A consulta de albums e posts está ativa, mas como é possível popular os dados apenas na database o resultado sempre é zero ao criar uma conta.
-- A senha é apenas para ilustrar, você pode conectar-se somente com o e-mail e um valor aleatório para validar o campo de senha.
+
+-   A consulta de albums e posts está ativa, mas como é possível popular os dados apenas na database o resultado sempre é zero ao criar uma conta.
+-   A senha é apenas para ilustrar, você pode conectar-se somente com o e-mail e um valor aleatório para validar o campo de senha.
 
 ### 🛠️ Libs
 
@@ -37,7 +39,7 @@ yarn  # Ou qualquer outro gerenciador
 
 ##### Criar arquivo .env
 
-Copiar as variáveis de ambiente abaixo ou arquivo `.env.sample` da raiz do projeto para um arquivo .env
+Copiar as variáveis de ambiente abaixo para um arquivo .env
 
 ```
 DB_URL="postgres://user:password@host:port/db"
@@ -47,15 +49,10 @@ API_URL="http://localhost:3000/api"
 
 ##### Configurar a database
 
-Para configurar e utilizar o Postgres deve-se alterar a configuração no arquivo `/src/db/connect.ts`
+Altere a exportação da pasta src/db/index.ts para:
 
 ```
-import { drizzle as drizzlejs } from "drizzle-orm/postgres-js";
-import postgress from "postgres";
-
-const connection = postgress(process.env.POSTGRES_URL! || process.env.DB_URL!);
-export const db = drizzle(connection, { schema });
-
+export * from "./connect-env";
 ```
 
 ##### Rodar o projeto
@@ -87,7 +84,7 @@ yarn dev
 
 ##### Bônus:
 
--   [ ] -   O formulário deve ser processado server side
+-   [x] -   O formulário deve ser processado server side
 -   [x] -   Agrupar os dias da semana de forma programática
 -   [x] -   Validação de formulário antes do envio
 -   [x] -   Botões e inputs com o estilo definido pelo layout
@@ -98,7 +95,7 @@ yarn dev
 -   [x] -   Exibir informações básicas na página de perfil
 -   [x] -   Garantir que a página de usuário não encontrado seja exibida de forma elegante
 -   [x] -   Tabela de usuários na rota /user e o formulário em /user/new
--   [ ] -   Redirecionar de volta para a página de usuários e revalidar as informações ???
+-   [x] -   Redirecionar de volta para a página de usuários e revalidar as informações
 -   [x] -   UI de fallback quando os dados estão sendo buscados
 -   [x] -   Header de acordo com a página
 

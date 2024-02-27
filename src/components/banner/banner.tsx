@@ -1,5 +1,4 @@
 import { AlignLeft, Basket, Trophy } from "@/assets";
-import Image from "next/image";
 import React from "react";
 
 export function Banner() {
