@@ -13,6 +13,7 @@ import { useToast } from "@/service";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRegisterUser } from "@/domain";
 import { Checkbox, FormControlLabel } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 export const fields: { id: keyof RegisterSchema; label: string }[] = [
     { id: "username", label: "Nome de usuário" },
@@ -25,7 +26,7 @@ export function FormRegister() {
     const [checkedLabel, setCheckedLabel] = useState<string[]>([]);
     const { setToast } = useToast();
     const queryClient = useQueryClient();
-    const { register, handleSubmit, setValue, reset, formState } =
+    const { register, handleSubmit, setValue, reset, getValues, formState } =
         useForm<RegisterSchema>({
             resolver: zodResolver(registerSchema),
             mode: "onChange",
@@ -55,6 +56,10 @@ export function FormRegister() {
                 message: "Usuário cadastrado com sucesso!",
             });
             queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
+            const request = await signIn("credentials", {
+                email: getValues("email"),
+                callbackUrl: "/user",
+            });
         },
         onError: () => {
             setToast({

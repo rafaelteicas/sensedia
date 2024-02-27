@@ -4,10 +4,12 @@ import { db } from "@/db/connect-env";
 import Credentials from "next-auth/providers/credentials";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { redirect } from "next/navigation";
 
 export const {
     handlers: { GET, POST },
     auth,
+    signIn,
 } = NextAuth({
     adapter: DrizzleAdapter(db),
     session: {
@@ -35,4 +37,8 @@ export const {
             },
         }),
     ],
+    pages: {
+        signIn: "/auth",
+        error: "/auth",
+    },
 });

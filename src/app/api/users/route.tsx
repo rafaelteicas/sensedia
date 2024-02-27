@@ -10,5 +10,5 @@ export async function GET() {
         full outer join ${albums} a on a.user_id = u.id
         group by u.id`
     );
-    return NextResponse.json({ users: response.rows[0] });
+    return NextResponse.json({ users: response.rows });
 }

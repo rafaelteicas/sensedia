@@ -4,16 +4,30 @@ import React, { FormEvent } from "react";
 import { Input, Button } from "@/components";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useToast } from "@/service";
 
 export function FormLogin() {
+    const { setToast } = useToast();
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const email = formData.get("email");
-        await signIn("credentials", {
+        const request = await signIn("credentials", {
             email: email,
             callbackUrl: "/user",
+            redirect: false,
         });
+        if (request?.error) {
+            setToast({
+                icon: "error",
+                message: "Credenciais inválidas",
+            });
+        } else {
+            await signIn("credentials", {
+                email: email,
+                callbackUrl: "/user",
+            });
+        }
     }
     return (
         <form onSubmit={handleSubmit}>
