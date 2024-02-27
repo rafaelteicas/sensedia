@@ -34,8 +34,8 @@ export default async function RootLayout({
                             {children}
                         </div>
                     </Provider>
+                    <div className="bg-gray-850 w-full h-20 mt-8" />
                 </div>
-                <div className="bg-gray-850 w-full h-20 mt-8" />
             </body>
         </html>
     );

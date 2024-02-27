@@ -2,6 +2,15 @@
 
 Aplicação em Next.js desenvolvida para a etapa seletiva.
 
+Para visualizar o projeto em produção basta acessar o link:
+
+```
+https://sensedia-two.vercel.app/auth
+```
+OBS:
+- A consulta de albums e posts está ativa, mas como é possível popular os dados apenas na database o resultado sempre é zero ao criar uma conta.
+- A senha é apenas para ilustrar, você pode conectar-se somente com o e-mail e um valor aleatório para validar o campo de senha.
+
 ### 🛠️ Libs
 
 -   [Next.js 14](https://nextjs.org/)
@@ -34,6 +43,19 @@ Copiar as variáveis de ambiente abaixo ou arquivo `.env.sample` da raiz do proj
 DB_URL="postgres://user:password@host:port/db"
 SECRET="SECRET"
 API_URL="http://localhost:3000/api"
+```
+
+##### Configurar a database
+
+Para configurar e utilizar o Postgres deve-se alterar a configuração no arquivo `/src/db/connect.ts`
+
+```
+import { drizzle as drizzlejs } from "drizzle-orm/postgres-js";
+import postgress from "postgres";
+
+const connection = postgress(process.env.POSTGRES_URL! || process.env.DB_URL!);
+export const db = drizzle(connection, { schema });
+
 ```
 
 ##### Rodar o projeto
