@@ -95,7 +95,7 @@ export function UserTable({
                             )}
                         </td>
                         <td
-                            onClick={() => push(`/profile/${user.username}`)}
+                            onClick={() => push(`/user/${user.username}`)}
                             className="text-gray-850 font-bold cursor-pointer hover:underline"
                         >
                             {user.username}

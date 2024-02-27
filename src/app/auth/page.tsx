@@ -2,7 +2,7 @@ import React from "react";
 import { Banner } from "@/components";
 import { FormLogin } from "./components/form-login";
 
-export default async function Auth() {
+export default function Auth() {
     return (
         <>
             <Banner />

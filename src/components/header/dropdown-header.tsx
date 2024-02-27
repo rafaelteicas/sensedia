@@ -4,6 +4,29 @@ type Props = {
     onMouseLeave: () => void;
 };
 
+export function DropdownHeader({ onMouseLeave }: Props) {
+    return (
+        <div onMouseLeave={onMouseLeave} className={styles.container}>
+            {items.map((item) => (
+                <div key={item.title} className="group">
+                    <p
+                        onClick={item.onClick}
+                        className="text-gray-75 text-base hover:text-gray-50 text-left ml-4"
+                    >
+                        <div className="absolute rounded-r-md left-0 w-1 h-6 group-hover:bg-purple-950 " />
+                        {item.title}
+                    </p>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+const styles = {
+    container:
+        "absolute right-2 top-[52px] text-gray-50 bg-[#2e2e2e] flex flex-col gap-4 w-40 py-2",
+};
+
 const items = [
     {
         title: "Lista de amigos",
@@ -25,24 +48,3 @@ const items = [
             }),
     },
 ];
-
-export function DropdownHeader({ onMouseLeave }: Props) {
-    return (
-        <div onMouseLeave={onMouseLeave} className={styles.container}>
-            {items.map((item) => (
-                <p
-                    key={item.title}
-                    onClick={item.onClick}
-                    className="hover:text-gray-300 text-left"
-                >
-                    {item.title}
-                </p>
-            ))}
-        </div>
-    );
-}
-
-const styles = {
-    container:
-        "absolute right-2 top-[52px] text-gray-50 bg-gray-850 flex flex-col gap-4 p-4",
-};

@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import { InputProps, TextField, TextFieldProps } from "@mui/material";
+import { TextField, TextFieldProps } from "@mui/material";
 
 interface Props extends Omit<TextFieldProps, "variant"> {
     required?: boolean;
@@ -15,7 +17,6 @@ export function Input({
     return (
         <TextField
             variant="filled"
-            className="z-0"
             InputProps={{
                 endAdornment: LeftIcon,
                 ...InputProps,

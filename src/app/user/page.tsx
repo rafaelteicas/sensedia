@@ -7,12 +7,11 @@ import { Search } from "@/assets";
 import { Input, Pagination } from "@/components";
 
 export default function User() {
+    const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const { data, isLoading, isError, isFetching, refetch } = useGetAllUsers({
         search,
     });
-    const [currentPage, setCurrentPage] = useState(1);
-    const [perPage, setPerPage] = useState(2);
 
     if (isError) {
         return (
@@ -34,7 +33,7 @@ export default function User() {
     }
     return (
         <>
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 pb-8">
                 <h1 className="text-2xl bold my-10">Usuários</h1>
                 <Input
                     label="Procurar"
@@ -58,7 +57,7 @@ export default function User() {
                             isFetching={isFetching}
                             search={search}
                             currentPage={currentPage}
-                            perPage={perPage}
+                            perPage={10}
                         />
                     </tbody>
                 </table>
@@ -66,13 +65,15 @@ export default function User() {
             <Pagination
                 items={data?.length}
                 currentPage={currentPage}
-                perPage={perPage}
-                onClickNext={() => setCurrentPage(currentPage + 1)}
-                onClickPrevious={() => setCurrentPage(currentPage - 1)}
-                onClickLast={() =>
-                    setCurrentPage(Math.ceil(data!.length / perPage))
-                }
-                onClickFirst={() => setCurrentPage(1)}
+                perPage={10}
+                onClick={{
+                    first: () => setCurrentPage(1),
+                    last: () => setCurrentPage(Math.ceil(data!.length / 10)),
+                    next: () => setCurrentPage(currentPage + 1),
+                    previous: () => setCurrentPage(currentPage - 1),
+                    midNext: () => setCurrentPage(currentPage + 1),
+                    midPrevious: () => setCurrentPage(currentPage - 1),
+                }}
             />
         </>
     );

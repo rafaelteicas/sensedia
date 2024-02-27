@@ -1,11 +1,14 @@
-import NextAuth, { NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db/connect";
 import Credentials from "next-auth/providers/credentials";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-export const {handlers: { GET,POST}, auth } = NextAuth( {
+export const {
+    handlers: { GET, POST },
+    auth,
+} = NextAuth({
     adapter: DrizzleAdapter(db),
     session: {
         strategy: "jwt",
@@ -31,4 +34,4 @@ export const {handlers: { GET,POST}, auth } = NextAuth( {
             },
         }),
     ],
-})
+});

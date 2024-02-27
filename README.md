@@ -96,5 +96,5 @@ yarn dev
 
 ##### Outros:
 
--   [ ] -   Implemente o resto do layout
+-   [x] -   Implemente o resto do layout
 -   [ ] -   Testes
