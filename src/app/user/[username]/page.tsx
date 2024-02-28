@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Avatar } from "@/components";
-import { getInitialsAvatar } from "@/components/header/get-initials-avatar";
+import { getInitialsAvatar } from "@/components/avatar/get-initials-avatar";
 import { useGetUserById } from "@/domain";
 import { Skeleton } from "@mui/material";
 

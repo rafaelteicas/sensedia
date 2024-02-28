@@ -3,13 +3,10 @@
 Aplicação em Next.js desenvolvida para a etapa seletiva.
 
 Para visualizar o projeto em produção basta acessar o link:
-
-```
-https://sensedia-two.vercel.app/auth
-```
-
+https://sensedia-two.vercel.app/
 OBS:
 
+-   A reposta não é sincronizada instantaneamente quando está utilizando o banco de dados da vercel
 -   A consulta de albums e posts está ativa, mas como é possível popular os dados apenas na database o resultado sempre é zero ao criar uma conta.
 -   A senha é apenas para ilustrar, você pode conectar-se somente com o e-mail e um valor aleatório para validar o campo de senha.
 
@@ -27,7 +24,8 @@ OBS:
 -   [Zod](https://zod.dev/)
 -   [Zustand](https://zustand-demo.pmnd.rs/)
 -   [MaterialUI](https://mui.com/)
--   [Jest](https://jestjs.io/pt-BR/)
+-   [Vitest](https://vitest.dev/)
+-   [Playwright](https://playwright.dev/)
 
 ### ⚙️ Configurações
 
@@ -52,13 +50,23 @@ API_URL="http://localhost:3000/api"
 Altere a exportação da pasta src/db/index.ts para:
 
 ```
-export * from "./connect-env";
+export * from "./connect-dev";
 ```
 
 ##### Rodar o projeto
 
 ```
 yarn dev
+```
+
+##### Testes
+
+```
+yarn test # unitários
+```
+
+```
+yarn test:e2e
 ```
 
 ### 📄 User Stories
@@ -69,7 +77,7 @@ yarn dev
 -   [x] -   Adicionar informações sobre Posts e Álbuns
 -   [x] -   Criar endpoints que retornem Dias da Semana e cidades
 -   [x] -   Ícone de lixeira no hover do item da lista
--   [ ] -   Campo blocked para true ???
+-   [x] -   Remover usuário
 
 ##### Bônus:
 
@@ -116,4 +124,4 @@ yarn dev
 ##### Outros:
 
 -   [x] -   Implemente o resto do layout
--   [ ] -   Testes
+-   [x] -   Testes

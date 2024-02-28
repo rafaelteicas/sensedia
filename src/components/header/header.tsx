@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { User } from "next-auth";
 import { DropdownHeader } from "./dropdown-header";
 import { Button } from "..";
-import { getInitialsAvatar } from "./get-initials-avatar";
+import { getInitialsAvatar } from "../avatar/get-initials-avatar";
 import { getBreadcrumb } from "./get-breadcrumb";
 import Link from "next/link";
 import { Avatar } from "../avatar/avatar";
@@ -17,8 +17,9 @@ type Props = {
 
 export function Header({ user }: Props) {
     const path = usePathname();
+
     const [dropdown, setDropdown] = useState(false);
-    const breadcrumbs = path!!.split("/").filter((path) => path);
+    const breadcrumbs = path.split("/").filter((path) => path);
     const { push } = useRouter();
     return (
         <>

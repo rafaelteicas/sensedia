@@ -84,7 +84,7 @@ export function Pagination({ items, currentPage, perPage, onClick }: Props) {
                         disabled={currentPage >= pages.length}
                         preset="outlined"
                     >
-                        Posterior
+                        Próximo
                     </Button>
                 </div>
                 <div className="text-xs font-medium text-gray-750">

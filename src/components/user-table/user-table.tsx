@@ -7,6 +7,7 @@ import { Skeleton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { getPagination } from "@/utils";
 import { CurrentPage } from "./current-page";
+import { signOut } from "next-auth/react";
 
 export const heads = [
     "",
@@ -43,11 +44,12 @@ export function UserTable({
     const { setModal, hideModal } = useModal();
     const { push } = useRouter();
     const { remove } = useRemoveUser({
-        onSuccess: () => {
+        onSuccess: async () => {
             setToast({
                 icon: "success",
                 message: "Usuário removido com sucesso!",
             });
+            await signOut();
         },
         onError: () => {
             setToast({

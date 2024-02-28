@@ -106,9 +106,10 @@ export function FormRegister() {
                     <div className="grid grid-cols-3">
                         {registerDays.map((day) => (
                             <FormControlLabel
-                                key={day}
                                 {...register("days")}
+                                key={day}
                                 label={day}
+                                id={day}
                                 control={
                                     <Checkbox
                                         checked={checkedLabel.includes(day)}
