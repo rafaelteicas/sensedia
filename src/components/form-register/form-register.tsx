@@ -51,11 +51,18 @@ export function FormRegister() {
 
     const { registerUser, isPending } = useRegisterUser({
         onSuccess: async () => {
+            queryClient.invalidateQueries({
+                queryKey: [
+                    "getAllUsers",
+                    "getPostsByUserId",
+                    "getAlbumsByUserId",
+                ],
+            });
             setToast({
                 icon: "success",
                 message: "Usuário cadastrado com sucesso!",
             });
-            queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
+
             await signIn("credentials", {
                 email: getValues("email"),
                 callbackUrl: "/user",

@@ -6,7 +6,6 @@ import { MutationOptions } from "@/types/mutation-types";
 export function useRegisterUser(options?: MutationOptions) {
     const mutation = useMutation<void, Error, RegisterUserType>({
         mutationFn: (data) => userService.registerUser(data),
-        retry: false,
         onSuccess: () => {
             if (options?.onSuccess) {
                 options.onSuccess();

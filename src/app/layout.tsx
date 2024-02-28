@@ -30,7 +30,7 @@ export default async function RootLayout({
                 <div className="flex flex-1 flex-col min-h-screen">
                     <Provider>
                         <Header user={session?.user} />
-                        <div className="flex flex-1 flex-col px-72">
+                        <div className="flex flex-1 flex-col px-4 sm:px-72">
                             {children}
                         </div>
                     </Provider>

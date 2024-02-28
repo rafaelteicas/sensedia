@@ -4,7 +4,6 @@ import { db } from "@/db/connect-env";
 import Credentials from "next-auth/providers/credentials";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
 
 export const {
     handlers: { GET, POST },
@@ -31,7 +30,10 @@ export const {
 
                 if (query[0])
                     return {
-                        ...query[0],
+                        id: query[0].id,
+                        name: query[0].name,
+                        email: query[0].email,
+                        image: query[0].id,
                     };
                 else return null;
             },

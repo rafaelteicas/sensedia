@@ -36,6 +36,7 @@ export function UserTable({
     currentPage,
     perPage,
     session,
+    search,
 }: Props) {
     const { setToast } = useToast();
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
@@ -61,7 +62,7 @@ export function UserTable({
         setModal(<Modal id={user.id} hideModal={hideModal} remove={remove} />);
     }
 
-    if (isLoading || isFetching) {
+    if ((isLoading || isFetching) && !search) {
         return (
             <tr>
                 {heads.map((head) => (
@@ -86,7 +87,7 @@ export function UserTable({
                         user={user}
                         onMouseEnter={() => setHoveredRow(user.id)}
                         onMouseLeave={() => setHoveredRow(null)}
-                        navigateToProfile={() => push(`/user/${user.id}`)}
+                        navigateToProfile={() => push(`/user/${user.email}`)}
                         onClick={() => handleDelete(user)}
                         row={hoveredRow}
                         session={session}

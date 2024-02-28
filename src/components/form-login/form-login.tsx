@@ -17,7 +17,7 @@ export function FormLogin() {
             callbackUrl: "/user",
             redirect: false,
         });
-        if (request?.error) {
+    if (request?.error) {
             setToast({
                 icon: "error",
                 message: "Credenciais inválidas",

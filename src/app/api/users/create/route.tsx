@@ -14,6 +14,8 @@ export async function POST(req: NextRequest) {
         city,
         days,
         password: "Senha123",
+        created_at: new Date(),
+        updated_at: new Date(),
     });
 
     return NextResponse.json(data);

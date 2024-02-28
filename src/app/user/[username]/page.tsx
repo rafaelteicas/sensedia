@@ -1,17 +1,19 @@
 "use client";
 
+import React from "react";
+import { Avatar } from "@/components";
 import { getInitialsAvatar } from "@/components/header/get-initials-avatar";
 import { useGetUserById } from "@/domain";
 import { Skeleton } from "@mui/material";
-import React from "react";
 
 export default function UserProfile({
     params,
 }: {
     params: { username: string };
 }) {
-    const { data, isError, isLoading } = useGetUserById(params.username);
-
+    const { data, isError, isLoading } = useGetUserById(
+        decodeURIComponent(params.username)
+    );
     if (isLoading) {
         return (
             <div className={styles.container}>
@@ -27,9 +29,7 @@ export default function UserProfile({
     if (!data || isError) {
         return (
             <div className={styles.container}>
-                <div className="size-20 rounded-full bg-gray-850 flex justify-center items-center">
-                    <p className="text-white font-bold text-2xl">?</p>
-                </div>
+                <Avatar size="lg" name="?" />
                 <p className="font-medium">
                     Não foi possível encontrar este usuário
                 </p>
@@ -39,11 +39,7 @@ export default function UserProfile({
 
     return (
         <div className={styles.container}>
-            <div className="size-20 rounded-full bg-purple-950 flex justify-center items-center">
-                <p className="text-white font-bold text-2xl">
-                    {getInitialsAvatar(data.name)}
-                </p>
-            </div>
+            <Avatar size="lg" name={getInitialsAvatar(data.name)} />
             <p>Informações de usuário</p>
             <div className={styles.userContainerStyle}>
                 <p>{data.name}</p>

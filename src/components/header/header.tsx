@@ -9,6 +9,7 @@ import { Button } from "..";
 import { getInitialsAvatar } from "./get-initials-avatar";
 import { getBreadcrumb } from "./get-breadcrumb";
 import Link from "next/link";
+import { Avatar } from "../avatar/avatar";
 
 type Props = {
     user?: User;
@@ -40,7 +41,7 @@ export function Header({ user }: Props) {
                     {breadcrumbs.map((breadcrumb, index) => (
                         <div
                             key={breadcrumb}
-                            className="flex items-center gap-2"
+                            className="hidden sm:flex items-center gap-2 "
                         >
                             <Arrow width={16} height={10} />
                             <p
@@ -58,19 +59,18 @@ export function Header({ user }: Props) {
                         </div>
                     ))}
                 </div>
-                <Help />
-                <Apps />
+                <Help className="hidden sm:block" />
+                <Apps className="hidden sm:block" />
                 <div className="border-l">
                     {user ? (
                         <button
-                            className="relative flex items-center gap-2 "
+                            className="relative hidden items-center gap-2 ml-2 sm:flex"
                             onClick={() => setDropdown((cur) => !cur)}
                         >
-                            <div className={styles.userAvatar}>
-                                <p className="text-sm text-white">
-                                    {getInitialsAvatar(user.name || "")}
-                                </p>
-                            </div>
+                            <Avatar
+                                size="sm"
+                                name={getInitialsAvatar(user.name || "")}
+                            />
                             <p className="text-sm text-gray75">{user.name}</p>
                             {dropdown && (
                                 <DropdownHeader
@@ -95,6 +95,4 @@ const styles = {
     secondHeaderContainer:
         "w-full h-16 sticky top-0 bg-white border-b flex items-center pr-8 pl-8 gap-4 z-10",
     welcome: "text-purple-950 font-bold uppercase text-sm cursor-pointer",
-    userAvatar:
-        "bg-purple-950 rounded-full w-10 h-10 items-center flex justify-center ml-4",
 };

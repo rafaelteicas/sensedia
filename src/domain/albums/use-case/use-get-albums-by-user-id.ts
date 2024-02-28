@@ -3,7 +3,7 @@ import { albumsService } from "../albums-service";
 
 export function useGetAlbumsByUserId(userId: string) {
     const query = useQuery({
-        queryKey: ["getAlbumsByUserId"],
+        queryKey: ["getAlbumsByUserId", userId],
         queryFn: () => albumsService.getAlbumsByUserId(userId),
         retry: false,
     });

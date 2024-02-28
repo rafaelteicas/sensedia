@@ -8,7 +8,7 @@ export async function GET(
     { params }: { params: { id: string } }
 ) {
     const user = await db.query.users.findFirst({
-        where: (user, { eq }) => eq(user.id, params.id),
+        where: (user, { eq }) => eq(user.email, params.id),
     });
     return NextResponse.json({ user: user });
 }

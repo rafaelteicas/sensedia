@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Input, Pagination, UserTable, heads } from "..";
 import { Search } from "@/assets";
 import { useGetAllUsers } from "@/domain";
-import { string } from "zod";
+import { useDebounce } from "@/hooks";
 
 type Props = {
     session: string | null;
@@ -12,13 +12,21 @@ type Props = {
 export function Table({ session }: Props) {
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
-    const { data, isLoading, isError, isFetching, refetch } = useGetAllUsers({
-        search,
-    });
+    const { data, isLoading, isError, isFetching, refetch } = useGetAllUsers();
+
+    const filteredUsers = useMemo(() => {
+        if (!data) return;
+        return data.filter(
+            (user) =>
+                user.name.toLowerCase().includes(search.toLowerCase()) ||
+                user.username.toLowerCase().includes(search.toLowerCase()) ||
+                user.email.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [data, search]);
 
     if (isError) {
         return (
-            <div className="flex flex-1 gap-4">
+            <div className="flex flex-1 flex-col gap-4 justify-center items-center">
                 <p className="text-2xl font-bold">
                     Não foi possível realizar a busca!
                 </p>
@@ -53,7 +61,7 @@ export function Table({ session }: Props) {
                     </thead>
                     <tbody>
                         <UserTable
-                            data={data}
+                            data={filteredUsers}
                             isLoading={isLoading}
                             isFetching={isFetching}
                             search={search}
@@ -65,12 +73,13 @@ export function Table({ session }: Props) {
                 </table>
             </div>
             <Pagination
-                items={data?.length}
+                items={filteredUsers?.length}
                 currentPage={currentPage}
                 perPage={10}
                 onClick={{
                     first: () => setCurrentPage(1),
-                    last: () => setCurrentPage(Math.ceil(data!.length / 10)),
+                    last: () =>
+                        setCurrentPage(Math.ceil(filteredUsers!.length / 10)),
                     next: () => setCurrentPage(currentPage + 1),
                     previous: () => setCurrentPage(currentPage - 1),
                     midNext: () => setCurrentPage(currentPage + 1),

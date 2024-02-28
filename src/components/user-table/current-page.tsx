@@ -48,8 +48,8 @@ export function CurrentPage({
             <td>{user.email}</td>
             <td>{user.city}</td>
             <td>{user.days}</td>
-            <td>{posts.posts?.length}</td>
-            <td>{albums.albums?.length}</td>
+            <td>{posts.posts?.length || 0}</td>
+            <td>{albums.albums?.length || 0}</td>
         </tr>
     );
 }

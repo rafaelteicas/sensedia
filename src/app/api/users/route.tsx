@@ -8,7 +8,8 @@ export async function GET() {
         sql`select u.id, u.username, u.name, u.email, u.city, u.days, COUNT(p.id) AS Posts, COUNT(a.user_id) AS Albums, u.created_at, u.updated_at from ${users} u 
         full outer join ${posts} p on u.id = p.user_id 
         full outer join ${usersToAlbums} a on a.user_id = u.id
-        group by u.id`
+        group by u.id
+        order by u.created_at desc`
     );
 
     return NextResponse.json({ users: response.rows });
