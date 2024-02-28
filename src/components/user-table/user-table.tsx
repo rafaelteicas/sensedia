@@ -3,10 +3,10 @@
 import React, { useState } from "react";
 import { UserType, useRemoveUser } from "@/domain";
 import { useModal, useToast } from "@/service";
-import { Trash } from "@/assets";
 import { Skeleton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { getPagination } from "@/utils";
+import { CurrentPage } from "./current-page";
 
 export const heads = [
     "",
@@ -26,6 +26,7 @@ type Props = {
     search: string;
     currentPage: number;
     perPage: number;
+    session: string | null;
 };
 
 export function UserTable({
@@ -34,6 +35,7 @@ export function UserTable({
     isFetching,
     currentPage,
     perPage,
+    session,
 }: Props) {
     const { setToast } = useToast();
     const [hoveredRow, setHoveredRow] = useState<string | null>(null);
@@ -71,42 +73,24 @@ export function UserTable({
         );
     }
     if (data) {
-        const paginatedData = getPagination(data, currentPage, perPage);
+        const paginatedData: UserType[] = getPagination(
+            data,
+            currentPage,
+            perPage
+        );
         return (
             <>
                 {paginatedData.map((user) => (
-                    <tr
+                    <CurrentPage
                         key={user.id}
-                        className={styles.rowContainer}
+                        user={user}
                         onMouseEnter={() => setHoveredRow(user.id)}
                         onMouseLeave={() => setHoveredRow(null)}
-                    >
-                        <td className="h-[100px] w-12">
-                            {hoveredRow === user.id && (
-                                <div
-                                    className="flex justify-center"
-                                    onClick={() => handleDelete(user)}
-                                >
-                                    <Trash
-                                        color="red"
-                                        className="cursor-pointer"
-                                    />
-                                </div>
-                            )}
-                        </td>
-                        <td
-                            onClick={() => push(`/user/${user.username}`)}
-                            className="text-gray-850 font-bold cursor-pointer hover:underline"
-                        >
-                            {user.username}
-                        </td>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>{user.city}</td>
-                        <td>{user.days}</td>
-                        <td>{user.posts}</td>
-                        <td>{user.albums}</td>
-                    </tr>
+                        navigateToProfile={() => push(`/user/${user.id}`)}
+                        onClick={() => handleDelete(user)}
+                        row={hoveredRow}
+                        session={session}
+                    />
                 ))}
             </>
         );
@@ -144,8 +128,3 @@ function Modal({ id, hideModal, remove }: ModalProps) {
         </>
     );
 }
-
-const styles = {
-    rowContainer:
-        " text-gray-550 text-base font-normal border-b hover:bg-gray-100",
-};

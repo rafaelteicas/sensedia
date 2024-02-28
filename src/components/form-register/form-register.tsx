@@ -56,7 +56,7 @@ export function FormRegister() {
                 message: "Usuário cadastrado com sucesso!",
             });
             queryClient.invalidateQueries({ queryKey: ["getAllUsers"] });
-            const request = await signIn("credentials", {
+            await signIn("credentials", {
                 email: getValues("email"),
                 callbackUrl: "/user",
             });

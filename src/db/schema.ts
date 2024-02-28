@@ -63,15 +63,28 @@ export const posts = pgTable("posts", {
     updated_at: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const albums = pgTable("user_albums", {
+export const albums = pgTable("albums", {
     id: uuid("id").primaryKey().notNull(),
-    user_id: text("user_id")
-        .unique()
-        .references(() => users.id, { onDelete: "cascade" }),
-    content: text("content"),
+    title: text("title").notNull(),
+    description: text("description").notNull(),
     created_at: timestamp("created_at").defaultNow().notNull(),
     updated_at: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const usersToAlbums = pgTable(
+    "user_albums",
+    {
+        userId: uuid("user_id")
+            .notNull()
+            .references(() => users.id),
+        albumId: uuid("album_id")
+            .notNull()
+            .references(() => albums.id),
+    },
+    (t) => ({
+        pk: primaryKey({ columns: [t.userId, t.albumId] }),
+    })
+);
 
 export const usersRelations = relations(users, ({ many }) => ({
     posts: many(posts),
@@ -85,9 +98,13 @@ export const postsRelations = relations(posts, ({ one }) => ({
     }),
 }));
 
-export const albumsRelations = relations(albums, ({ one }) => ({
-    author: one(users, {
-        fields: [albums.user_id],
+export const usersToAlbumsRelations = relations(usersToAlbums, ({ one }) => ({
+    group: one(albums, {
+        fields: [usersToAlbums.albumId],
+        references: [albums.id],
+    }),
+    user: one(users, {
+        fields: [usersToAlbums.userId],
         references: [users.id],
     }),
 }));

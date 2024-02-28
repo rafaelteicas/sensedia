@@ -9,3 +9,4 @@ export * from "./form-login/form-login";
 export * from "./form-register/form-register";
 export * from "./form-register/help-register";
 export * from "./user-table/user-table";
+export * from "./user-table/table";
